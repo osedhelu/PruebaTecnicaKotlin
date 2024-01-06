@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.osedhelu.creditbanco.R
+import com.osedhelu.creditbanco.ui.theme.Purple40
 
 
 @Composable
@@ -126,7 +127,7 @@ fun ButtonPersonal(
     title: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    color: Color = Color(0xFF06A4B4),
+    color: Color = Purple40,
     colorText: Color = Color(0xFFFFFFFF),
     modifier: Modifier = Modifier
 ) {

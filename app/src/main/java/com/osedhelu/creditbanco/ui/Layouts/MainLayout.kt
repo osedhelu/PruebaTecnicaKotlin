@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,6 +36,7 @@ fun MainLayout(
     bottomBar: @Composable () -> Unit = { Spacer(modifier = Modifier.size(0.dp)) },
     children: @Composable () -> Unit
 ) {
+
     val LottieisLoadding by remember {
         LoadingHelper.isLoading
 
@@ -51,42 +51,40 @@ fun MainLayout(
         ToastDuration.Long
     )
 
+
     if (isLoggin) {
         Scaffold(topBar = {
             MainHeader(navController = navController)
         }, bottomBar = { bottomBar() }, containerColor = PurpleGrey40) {
-            Box() {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it),
-                    contentAlignment = Alignment.TopCenter,
 
-                    ) {
-                    Canvas(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        val boxSize = size
-                        val borderF = 45f
-                        val cornerRadius = CornerRadius(borderF, borderF)
-                        val path = Path().apply {
-                            addRoundRect(
-                                RoundRect(
-                                    rect = Rect(
-                                        offset = Offset(0f, 0f),
-                                        size = boxSize, //usar el tamaño de la caja
-                                    ), topLeft = cornerRadius, topRight = cornerRadius
-                                )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                contentAlignment = Alignment.TopCenter,
+
+                ) {
+                Canvas(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val boxSize = size
+                    val borderF = 45f
+                    val cornerRadius = CornerRadius(borderF, borderF)
+                    val path = Path().apply {
+                        addRoundRect(
+                            RoundRect(
+                                rect = Rect(
+                                    offset = Offset(0f, 0f),
+                                    size = boxSize, //usar el tamaño de la caja
+                                ), topLeft = cornerRadius, topRight = cornerRadius
                             )
-                        }
-                        drawPath(path, color = Color.White)
+                        )
                     }
-
-                    // Aquí puedes poner tus hijos
-                    children()
+                    drawPath(path, color = Color.White)
                 }
 
-
+                // Aquí puedes poner tus hijos
+                children()
             }
 
 

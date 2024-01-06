@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,9 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.osedhelu.creditbanco.R
 import com.osedhelu.creditbanco.ui.Screens.LoginScreen.LoginHelpers
-import com.osedhelu.creditbanco.utils.GoToActivity
+import com.osedhelu.creditbanco.ui.theme.Purple40
 import com.osedhelu.creditbanco.utils.getDatetime
-import com.osedhelu.creditbanco.utils.iNameActivity
 
 
 @Composable
@@ -65,7 +62,7 @@ fun MainHeader(navController: NavController) {
                 }, modifier = Modifier.size(30.dp, 30.dp)) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        tint = Color.Blue,
+                        tint = Purple40,
                         contentDescription = "Setting"
                     )
                 }
@@ -82,13 +79,15 @@ fun MainHeader(navController: NavController) {
                 tint = Color.Unspecified,
                 modifier = Modifier.size(height = 60.dp, width = 180.dp)
             )
-            if (true) {
-                IconButton(onClick = {
-                    LoginHelpers.reset()
-                }) {
+            if (!btnVolver) {
+                IconButton(
+                    modifier = Modifier.size(30.dp, 30.dp),
+                    onClick = {
+                        LoginHelpers.reset()
+                    }) {
                     Icon(
                         imageVector = Icons.Filled.Clear,
-                        tint = Color.Blue,
+                        tint = Purple40,
                         contentDescription = "Setting"
                     )
                 }
@@ -100,7 +99,7 @@ fun MainHeader(navController: NavController) {
         if (!btnVolver) {
             Text(
                 text = stringResource(id = R.string.TEXT_BIENVENIDO),
-                color = Color.Black,
+                color = Purple40,
                 modifier = Modifier.padding(top = 10.dp, bottom = 5.dp),
                 fontWeight = FontWeight.Bold
             )

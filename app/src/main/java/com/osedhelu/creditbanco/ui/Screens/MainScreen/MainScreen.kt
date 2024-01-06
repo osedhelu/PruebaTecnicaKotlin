@@ -25,7 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.osedhelu.creditbanco.R
+import com.osedhelu.creditbanco.ui.Screens.anularPago.anularPagoData
+import com.osedhelu.creditbanco.ui.Screens.anularPago.anularPagoHelpers
+import com.osedhelu.creditbanco.ui.Screens.pagoScreen.pagoHelper
+import com.osedhelu.creditbanco.ui.components.AnimationLayout
 import com.osedhelu.creditbanco.ui.components.Headers.HeaderHelper
+import com.osedhelu.creditbanco.ui.theme.Purple40
 
 
 data class iCardButton(val title: String, val icon: Int, val path: String)
@@ -36,6 +41,7 @@ fun MainScreen(navController: NavController) {
         iCardButton("Pago", R.drawable.icon_payment, "pago"),
         iCardButton("Anular Pago", R.drawable.icons_cancel, "anularPago"),
     )
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.padding(16.dp),
@@ -52,13 +58,15 @@ fun MainScreen(navController: NavController) {
                     .padding(3.dp)
                     .fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red
+                    containerColor = Purple40
                 ),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp
                 ),
                 onClick = {
                     navController.navigate(item.path)
+                    pagoHelper.reset()
+                    anularPagoHelpers.reset()
                     HeaderHelper.show()
                 }) {
                 Column(

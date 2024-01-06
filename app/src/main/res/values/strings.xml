@@ -50,4 +50,5 @@
     <string name="comprobaciones">Comprobaciones</string>
     <string name="pagonfc">Pago NFC</string>
     <string name="TEXT_BIENVENIDO">Bienvenido\n</string>
+    <string name="pago">Enviar pago\n</string>
 </resources>

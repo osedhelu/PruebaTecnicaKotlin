@@ -189,3 +189,64 @@ class PhoneNumberInputVisualTransformation(
     // ...
 
 }
+class CreditCardVisualTransformation(
+    private val fixedCursorAtTheEnd: Boolean = true
+) : VisualTransformation {
+    private class FixedCursorOffsetMapping(
+        private val contentLength: Int,
+        private val formattedContentLength: Int,
+    ) : OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int = formattedContentLength
+        override fun transformedToOriginal(offset: Int): Int = contentLength
+    }
+
+    private class MovableCursorOffsetMapping(
+        private val unmaskedText: String,
+        private val maskedText: String
+    ) : OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int =
+            offset + offsetMaskCount(offset, maskedText)
+
+        override fun transformedToOriginal(offset: Int): Int =
+            offset - maskedText.take(offset).count { it == '-' }
+
+        private fun offsetMaskCount(offset: Int, maskedText: String): Int {
+            var maskOffsetCount = 0
+            var dataCount = 0
+            for (maskChar in maskedText) {
+                if (maskChar != '-') {
+                    maskOffsetCount++
+                } else if (++dataCount > offset) {
+                    break
+                }
+            }
+            return maskOffsetCount
+        }
+    }
+
+    override fun filter(text: AnnotatedString): TransformedText {
+        val inputText = text.text
+
+        val formattedCardNumber = inputText.chunked(4).joinToString("-")
+
+        val newText = AnnotatedString(
+            text = formattedCardNumber,
+            spanStyles = text.spanStyles,
+            paragraphStyles = text.paragraphStyles
+        )
+
+        val offsetMapping = if (fixedCursorAtTheEnd) {
+            FixedCursorOffsetMapping(
+                contentLength = inputText.length,
+                formattedContentLength = formattedCardNumber.length
+            )
+        } else {
+            MovableCursorOffsetMapping(
+                unmaskedText = text.toString(),
+                maskedText = newText.toString()
+            )
+        }
+
+        return TransformedText(newText, offsetMapping)
+    }
+}
