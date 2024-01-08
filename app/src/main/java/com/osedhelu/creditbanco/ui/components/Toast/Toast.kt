@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 
@@ -17,7 +18,7 @@ fun ToastComponent(
     val showDialog by remember { ToastHelpers.showToast }
     if (showDialog.showDialog) {
         AlertDialog(onDismissRequest = { ToastHelpers.deleteToast() },
-            text = { Text(text = showDialog.title) },
+            text = { Text(text = showDialog.title, fontSize = 20.sp) },
             confirmButton = {
                 TextButton(onClick = { ToastHelpers.deleteToast() }) {
                     Text(text = "OK")

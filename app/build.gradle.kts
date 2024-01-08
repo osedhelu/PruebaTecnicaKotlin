@@ -33,18 +33,11 @@ android {
         targetSdk = 33
         versionName = "1.0"
         versionCode = autoIncrementVersionCode()
-        
+
         buildConfigField("String", "SERVER_URL", getPropertyValue("SERVER_URL"))
         buildConfigField("String", "JWT_SECRET", getPropertyValue("JWT_SECRET"))
         buildConfigField("String", "CANAL", getPropertyValue("CANAL"))
         buildConfigField("String", "HASH_ENCRIPT", getPropertyValue("HASH_ENCRIPT"))
-//        buildConfigField("String", "MONEDA", getPropertyValue("MONEDA"))
-//        buildConfigField("String", "URL_GATEWAY", getPropertyValue("URL_GATEWAY"))
-//        buildConfigField("String", "DISGLOBAL_URL", getPropertyValue("DISGLOBAL_URL"))
-//        buildConfigField("String", "MIPATH_AUTH", getPropertyValue("MIPATH_AUTH"))
-//        buildConfigField("String", "MIPATH_SYNCUP", getPropertyValue("MIPATH_SYNCUP"))
-//        buildConfigField("String", "USER_TERMINAL", getPropertyValue("USER_TERMINAL"))
-//        buildConfigField("String", "PASS_TERMINAL", getPropertyValue("PASS_TERMINAL"))
 
         testInstrumentationRunner = "com.osedhelu.creditbanco.HiltTestRunner"
         vectorDrawables {
@@ -74,7 +67,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -90,7 +86,7 @@ android {
     buildFeatures {
         compose = true
         aidl = false
-        buildConfig = true 
+        buildConfig = true
         renderScript = false
         shaders = false
     }
@@ -111,9 +107,6 @@ dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
-    implementation(files("libs/nexgo-smartpos-sdk-v2.2.1_20190527.aar"))
-    implementation(libs.socketio)
     implementation(libs.runtime)
     implementation(libs.runtime.rxjava2)
     implementation(libs.runtime.livedata)
@@ -121,7 +114,6 @@ dependencies {
     implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.jetbrains.kotlin)
-
 
 
     // Core Android dependencies

@@ -27,4 +27,24 @@ object LoadingHelper : ViewModel() {
         iconSuccessError.value = IconType.MAIN
     }
 
+    @Synchronized
+    fun showLoading(text: String) {
+        isLoading.value = true
+        isLoading01.value = true
+        isLoading02.value = true
+        isLoadingMessage.value = text
+        iconSuccessError.value = IconType.MAIN
+    }
+
+    @Synchronized
+    fun showLoadingSuccess(text: String) {
+        isLoadingMessage.value = text
+        iconSuccessError.value = IconType.SUCCESS
+    }
+
+    @Synchronized
+    fun showLoadingError(text: String) {
+        isLoadingMessage.value = text
+        iconSuccessError.value = IconType.DANGER
+    }
 }

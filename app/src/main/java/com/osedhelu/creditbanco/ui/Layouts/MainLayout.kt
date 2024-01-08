@@ -44,54 +44,57 @@ fun MainLayout(
     val isLoggin by remember {
         LoginHelpers.isLogin
     }
-    if (LottieisLoadding) {
-        Loading()
-    }
+
     ToastComponent(
         ToastDuration.Long
     )
 
 
-    if (isLoggin) {
-        Scaffold(topBar = {
-            MainHeader(navController = navController)
-        }, bottomBar = { bottomBar() }, containerColor = PurpleGrey40) {
+    if (LottieisLoadding) {
+        Loading()
+    } else {
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-                contentAlignment = Alignment.TopCenter,
+        if (isLoggin) {
+            Scaffold(topBar = {
+                MainHeader(navController = navController)
+            }, bottomBar = { bottomBar() }, containerColor = PurpleGrey40) {
 
-                ) {
-                Canvas(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    val boxSize = size
-                    val borderF = 45f
-                    val cornerRadius = CornerRadius(borderF, borderF)
-                    val path = Path().apply {
-                        addRoundRect(
-                            RoundRect(
-                                rect = Rect(
-                                    offset = Offset(0f, 0f),
-                                    size = boxSize, //usar el tamaño de la caja
-                                ), topLeft = cornerRadius, topRight = cornerRadius
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    contentAlignment = Alignment.TopCenter,
+
+                    ) {
+                    Canvas(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        val boxSize = size
+                        val borderF = 45f
+                        val cornerRadius = CornerRadius(borderF, borderF)
+                        val path = Path().apply {
+                            addRoundRect(
+                                RoundRect(
+                                    rect = Rect(
+                                        offset = Offset(0f, 0f),
+                                        size = boxSize, //usar el tamaño de la caja
+                                    ), topLeft = cornerRadius, topRight = cornerRadius
+                                )
                             )
-                        )
+                        }
+                        drawPath(path, color = Color.White)
                     }
-                    drawPath(path, color = Color.White)
+
+                    // Aquí puedes poner tus hijos
+                    children()
                 }
 
-                // Aquí puedes poner tus hijos
-                children()
+
             }
-
-
+        } else {
+            LoginScreen()
         }
-    } else {
-        LoginScreen()
+
     }
 
 }
-

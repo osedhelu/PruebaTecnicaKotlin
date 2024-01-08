@@ -1,8 +1,11 @@
 package com.osedhelu.creditbanco.data.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.osedhelu.creditbanco.config.URL_BASE
+import com.osedhelu.creditbanco.data.local.database.AppDatabase
+import com.osedhelu.creditbanco.data.local.database.TransactionDao
 import com.osedhelu.creditbanco.data.remote.BancoDataSource
 import com.osedhelu.creditbanco.data.remote.createCustomOkHttpClient
 import dagger.Module
@@ -37,4 +40,17 @@ object DataSourceModule {
             .create(BancoDataSource::class.java)
 
     }
+
+    @Singleton
+    @Provides
+    fun dbDataSource(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "db_bfc")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun TransactionDao(db: AppDatabase): TransactionDao = db.transactionDao()
+
 }

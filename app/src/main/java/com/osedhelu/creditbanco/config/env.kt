@@ -13,9 +13,9 @@ const val SERIAL_DEFAULT = "1234567"
 
 
 //Api
-const val PATH_BANK_PAYMENT = "/payments"
+const val PATH_BANK_PAYMENT = "payments"
 const val PATH_BANK_AUTH = "$PATH_BANK_PAYMENT/authorization"
-const val PATH_BANK_ANNULATION = "$PATH_BANK_PAYMENT/annulation"
+const val PATH_BANK_ANNULATION = "$PATH_BANK_PAYMENT/annulment"
 
 
 const val FontSize = 18

@@ -1,7 +1,12 @@
 package com.osedhelu.creditbanco.data.remote
 
 
-import okhttp3.RequestBody
+import com.osedhelu.creditbanco.config.PATH_BANK_ANNULATION
+import com.osedhelu.creditbanco.config.PATH_BANK_AUTH
+import com.osedhelu.creditbanco.data.remote.dto.AnnulmentDto
+import com.osedhelu.creditbanco.data.remote.dto.AnnulmentRespDto
+import com.osedhelu.creditbanco.data.remote.dto.PaymentDto
+import com.osedhelu.creditbanco.data.remote.dto.PaymentRespDto
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -9,18 +14,10 @@ import retrofit2.http.POST
 
 interface BancoDataSource {
     @Headers("${ApiServiceInterceptor.BACKEND_BANCO}:true")
-    @POST("/")
-    suspend fun getTokenAuth(@Body body: RequestBody): Any
+    @POST(PATH_BANK_AUTH)
+    suspend fun emitPayment(@Body body: PaymentDto): PaymentRespDto
 
-//    @Headers("${ApiServiceInterceptor.BACKEND_BANCO}:true")
-//    @POST(PATH_BANK_LIST_BANK)
-//    suspend fun getListBanks(@Body body: IBodyListBank): IRespListBank
-//
-//    @Headers("${ApiServiceInterceptor.BACKEND_BANCO}:true")
-//    @POST(PATH_BANK_SENDPAYMENTB2P)
-//    suspend fun emitPayment(@Body body: iPayment): IPaymentResp
-//
-//    @Headers("${ApiServiceInterceptor.BACKEND_BANCO}:true")
-//    @POST(PATH_BANK_QUERYPAYMENTB2P)
-//    suspend fun valitPayment(@Body body: iQueryPaymentB2PBody): QueryPaymentB2PResp
+    @Headers("${ApiServiceInterceptor.BACKEND_BANCO}:true")
+    @POST(PATH_BANK_ANNULATION)
+    suspend fun AnnulmentPayment(@Body body: AnnulmentDto): AnnulmentRespDto
 }

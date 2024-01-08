@@ -31,7 +31,7 @@ fun Loading(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
+            .background(Color.White)
             .zIndex(1f), contentAlignment = Alignment.Center
     ) {
         LottieAnimation(

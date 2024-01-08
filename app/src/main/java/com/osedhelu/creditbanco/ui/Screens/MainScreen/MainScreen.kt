@@ -10,8 +10,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,16 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.osedhelu.creditbanco.R
-import com.osedhelu.creditbanco.ui.Screens.anularPago.anularPagoData
-import com.osedhelu.creditbanco.ui.Screens.anularPago.anularPagoHelpers
+import com.osedhelu.creditbanco.ui.Screens.ReportScreen.ReportHelper
+import com.osedhelu.creditbanco.ui.Screens.anularPago.AnnulmentHelpers
 import com.osedhelu.creditbanco.ui.Screens.pagoScreen.pagoHelper
-import com.osedhelu.creditbanco.ui.components.AnimationLayout
 import com.osedhelu.creditbanco.ui.components.Headers.HeaderHelper
 import com.osedhelu.creditbanco.ui.theme.Purple40
 
@@ -40,6 +34,7 @@ fun MainScreen(navController: NavController) {
     val itemsList: List<iCardButton> = listOf(
         iCardButton("Pago", R.drawable.icon_payment, "pago"),
         iCardButton("Anular Pago", R.drawable.icons_cancel, "anularPago"),
+        iCardButton("Reportes", R.drawable.icon_report, "resports"),
     )
 
     LazyVerticalGrid(
@@ -66,14 +61,19 @@ fun MainScreen(navController: NavController) {
                 onClick = {
                     navController.navigate(item.path)
                     pagoHelper.reset()
-                    anularPagoHelpers.reset()
+                    AnnulmentHelpers.reset()
+                    ReportHelper.reset()
                     HeaderHelper.show()
                 }) {
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(painter = painterResource(id = item.icon), contentDescription = "")
+                    Icon(
+                        painter = painterResource(id = item.icon),
+                        contentDescription = "",
+                        tint = Color.White
+                    )
                     Text(item.title)
                 }
 

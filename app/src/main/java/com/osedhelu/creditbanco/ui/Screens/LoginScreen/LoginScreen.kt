@@ -1,27 +1,17 @@
 package com.osedhelu.creditbanco.ui.Screens.LoginScreen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,9 +24,8 @@ import com.osedhelu.creditbanco.config.CommerceLocalData
 import com.osedhelu.creditbanco.ui.Layouts.LoginLayout
 import com.osedhelu.creditbanco.ui.components.ButtonPersonal
 import com.osedhelu.creditbanco.ui.components.InputGlobal
-import com.osedhelu.creditbanco.ui.components.Toast.ToastComponent
-import com.osedhelu.creditbanco.ui.components.Toast.ToastDuration
 import com.osedhelu.creditbanco.ui.components.Toast.ToastHelpers
+import com.osedhelu.creditbanco.utils.ConvertToBase64
 import com.osedhelu.creditbanco.utils.GoToActivity
 import com.osedhelu.creditbanco.utils.iNameActivity
 
@@ -52,6 +41,18 @@ fun LoginScreen() {
     var commerceCode by rememberSaveable {
         mutableStateOf("")
     }
+
+
+
+    LaunchedEffect(Unit) {
+        if (commerce !== null) {
+            val token = ConvertToBase64("${commerce.commerceCode}${commerce.terminalCode}")
+            CommerceLocalData.setTokenAuth(ctx, token)
+            ToastHelpers.show("Bienvenido")    // Este código se ejecutará solo una vez cuando se monte el componente
+            LoginHelpers.isLogin.value = true
+        }
+    }
+
     LoginLayout() {
         if (commerce == null) {
             Text(
@@ -99,12 +100,16 @@ fun LoginScreen() {
                 title = "Siguiente",
                 enabled = terminalCode.length >= 6 && commerceCode.length >= 6,
                 onClick = {
-                    ToastHelpers.show("$terminalCode, $commerceCode")
-                    LoginHelpers.isLogin.value = true
-//                            if (terminalCode === commerce.terminalCode && commerceCode === commerce.commerceCode) {
-//                                GoToActivity(iNameActivity.MAIN, ctx, true)
-//                                LoginHelpers.isLogin.value = true
-//                            }
+                    if (terminalCode == commerce.terminalCode && commerceCode == commerce.commerceCode) {
+                        val token = ConvertToBase64("${commerceCode}${terminalCode}")
+                        LoginHelpers.isLogin.value = true
+                        CommerceLocalData.setTokenAuth(ctx, token)
+                        ToastHelpers.show("Bienvenido")
+                    } else {
+                        ToastHelpers.show(
+                            "Codigo Incorrecto",
+                        )
+                    }
                 },
             )
         } else {

@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
-import com.osedhelu.creditbanco.ui.theme.primarey001
+import com.osedhelu.creditbanco.ui.theme.primary001
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -17,7 +17,7 @@ import java.util.Locale
 
 @Composable
 fun obtenerFechaActual(
-    style: TextStyle = TextStyle(fontStyle = FontStyle.Normal), color: Color = primarey001
+    style: TextStyle = TextStyle(fontStyle = FontStyle.Normal), color: Color = primary001
 ) {
     val currentDateTime = remember { mutableStateOf(Locale.getDefault()) }
     val CalendarGetInstance = remember { mutableStateOf(Calendar.getInstance().time) }
